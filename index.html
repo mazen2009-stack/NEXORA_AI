@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -6,106 +7,67 @@
 <title>NEXORA AI</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#090b14;color:#f4f4fc;font-family:Arial,sans-serif}
-.app{display:flex;height:100vh}
-.sidebar{width:245px;background:#111426;padding:22px;display:flex;flex-direction:column;gap:20px;border-left:1px solid #292d42}
-.logo{font-size:25px;font-weight:bold;color:#a994ff}
-.logo span{color:white}
-button{cursor:pointer;font-family:inherit}
-.new{background:#765cf0;color:white;border:0;padding:13px;border-radius:12px;font-size:15px}
-.menu{display:grid;gap:8px}
-.menu button{background:transparent;color:#c5c7da;border:0;text-align:right;padding:13px;border-radius:10px;font-size:14px}
-.menu button:hover{background:#252943}
-.bottom{margin-top:auto;color:#888da5;font-size:12px;text-align:center}
-.main{flex:1;display:flex;flex-direction:column;min-width:0}
-header{height:65px;border-bottom:1px solid #24283d;display:flex;align-items:center;justify-content:space-between;padding:0 22px}
-header strong{font-size:18px}
-.status{font-size:12px;color:#9e8bff}
-.content{flex:1;overflow-y:auto;padding:25px}
-.welcome{max-width:650px;margin:10vh auto;text-align:center}
-.logo-icon{height:65px;width:65px;margin:auto auto 20px;border-radius:20px;background:linear-gradient(135deg,#7557ef,#c16be9);display:grid;place-items:center;font-size:30px}
-h1{font-size:32px}
-h1 span{color:#a994ff}
-.subtitle{color:#9ca2b9;line-height:1.9;margin-bottom:30px}
-.suggestions{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.suggestion{background:#151a2c;border:1px solid #2a304b;color:white;text-align:right;padding:17px;border-radius:14px}
-.suggestion:hover{border-color:#8e76ff}
-.suggestion small{display:block;color:#9298b0;margin-top:8px}
-.chat{max-width:850px;margin:auto;display:flex;flex-direction:column;gap:15px}
-.message{padding:15px 18px;border-radius:15px;max-width:85%;line-height:1.8;white-space:pre-wrap}
-.user{background:#302750;align-self:flex-start}
-.bot{background:#171c30;align-self:flex-end}
-.composer-area{padding:15px 20px 22px}
-.composer{max-width:850px;margin:auto;background:#151a2c;border:1px solid #343b59;border-radius:17px;padding:10px;display:flex;align-items:center;gap:9px}
-textarea{flex:1;background:transparent;color:white;border:0;outline:0;resize:none;font-size:15px;font-family:inherit;padding:12px;min-height:42px}
-.send{background:#8065f5;color:white;border:0;border-radius:11px;padding:13px 17px}
-.tool{background:#282e47;color:white;border:0;border-radius:10px;padding:12px}
-.mobile{display:none;background:none;color:white;border:0;font-size:22px}
-#file{display:none}
-@media(max-width:700px){
-.sidebar{position:fixed;right:-260px;top:0;bottom:0;z-index:5;transition:.2s}
-.sidebar.open{right:0}
-.mobile{display:block}
-.content{padding:15px 12px}
-h1{font-size:26px}
-.suggestions{grid-template-columns:1fr}
-.composer-area{padding:10px}
-.message{max-width:95%}
-}
+body{margin:0;background:#090b14;color:#f4f4fc;font-family:Arial,sans-serif;height:100vh;overflow:hidden}
+.app{height:100vh;display:flex;flex-direction:column;max-width:1000px;margin:auto}
+header{height:65px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;border-bottom:1px solid #25283a;background:#101321}
+.logo{font-size:22px;font-weight:bold;letter-spacing:1px;color:#9b8cff}
+.status{font-size:12px;color:#65d6a0}
+main{flex:1;overflow-y:auto;padding:25px 16px}
+.welcome{text-align:center;margin:12vh auto 30px;max-width:600px}
+.welcome h1{font-size:35px;margin-bottom:12px;background:linear-gradient(90deg,#9c8cff,#55d9d0);color:transparent;background-clip:text}
+.welcome p{color:#999db2;line-height:1.8}
+.suggestions{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;max-width:550px;margin:25px auto}
+.suggestions button{background:#14192a;border:1px solid #292e45;color:#d9d9e8;padding:14px;border-radius:12px;cursor:pointer;text-align:right}
+.suggestions button:hover{border-color:#8b7cff}
+.message{max-width:85%;padding:13px 16px;border-radius:15px;margin:12px 0;line-height:1.8;white-space:pre-wrap;overflow-wrap:anywhere}
+.user{background:#6555c9;margin-right:auto;border-bottom-left-radius:4px}
+.bot{background:#171c2c;border:1px solid #292e40;margin-left:auto;border-bottom-right-radius:4px}
+.composer{padding:15px;background:#101321;border-top:1px solid #25283a}
+.input-area{display:flex;align-items:flex-end;gap:10px;background:#191e30;border:1px solid #303650;border-radius:15px;padding:10px}
+textarea{flex:1;resize:none;background:transparent;border:0;outline:none;color:white;font-size:16px;min-height:28px;max-height:120px;font-family:Arial;line-height:1.6}
+.send{background:#7765ed;color:white;border:0;border-radius:11px;padding:12px 18px;font-size:15px;cursor:pointer}
+.send:disabled{opacity:.5}
+.note{text-align:center;color:#777d91;font-size:11px;margin-top:9px}
+@media(max-width:500px){.welcome h1{font-size:29px}.suggestions{grid-template-columns:1fr}.message{max-width:94%}}
 </style>
 </head>
 <body>
 <div class="app">
-<aside class="sidebar" id="sidebar">
-<div class="logo">NEXORA <span>AI</span></div>
-<button class="new" onclick="newChat()">＋ محادثة جديدة</button>
-<div class="menu">
-<button onclick="newChat()">⌂ الرئيسية</button>
-<button onclick="imageMode()">▧ إنشاء صورة</button>
-<button onclick="document.getElementById('file').click()">▤ رفع ملف</button>
-<button onclick="showLibrary()">▣ المكتبة</button>
-</div>
-<div class="bottom">NEXORA AI<br>ذكاء اصطناعي للجميع</div>
-</aside>
-<main class="main">
 <header>
-<button class="mobile" onclick="toggleMenu()">☰</button>
-<strong>NEXORA AI</strong>
-<span class="status">● متصل</span>
+<div class="logo">NEXORA AI</div>
+<div class="status">● متصل</div>
 </header>
-<section class="content" id="content">
+
+<main id="content">
 <div class="welcome" id="welcome">
-<div class="logo-icon">✦</div>
-<h1>أهلاً بك في <span>NEXORA</span></h1>
-<p class="subtitle">مساعدك الذكي للتعلم والإبداع والإنتاجية.<br>كيف يمكنني مساعدتك اليوم؟</p>
+<h1>أهلاً بك في NEXORA</h1>
+<p>مساعدك الذكي للإجابة عن أسئلتك ومساعدتك في أفكارك ومهامك.</p>
 <div class="suggestions">
-<button class="suggestion" onclick="useSuggestion('اشرح لي درساً بطريقة سهلة')">📚 الدراسة<small>شرح وتبسيط الدروس</small></button>
-<button class="suggestion" onclick="useSuggestion('اقترح لي أفكاراً لمشروع جديد')">💡 الأفكار<small>اكتشف أفكاراً جديدة</small></button>
-<button class="suggestion" onclick="useSuggestion('ساعدني في كتابة كود لموقعي')">💻 البرمجة<small>مساعدة في الأكواد</small></button>
-<button class="suggestion" onclick="imageMode()">🎨 الصور<small>إنشاء الصور</small></button>
+<button onclick="useSuggestion('اشرح لي الذكاء الاصطناعي بطريقة بسيطة')">اشرح لي موضوعاً</button>
+<button onclick="useSuggestion('ساعدني في كتابة فكرة إبداعية')">اكتب لي فكرة</button>
+<button onclick="useSuggestion('ساعدني في حل مشكلة تقنية')">حل مشكلة تقنية</button>
+<button onclick="useSuggestion('علمني مهارة جديدة')">تعلم شيئاً جديداً</button>
 </div>
 </div>
-<div class="chat" id="chat"></div>
-</section>
-<div class="composer-area">
-<div class="composer">
-<button class="tool" onclick="document.getElementById('file').click()">＋</button>
-<button class="tool" onclick="imageMode()">▧</button>
-<textarea id="prompt" placeholder="اكتب رسالتك إلى NEXORA AI..." rows="1"></textarea>
-<button class="send" onclick="sendMessage()">إرسال ↑</button>
-<input type="file" id="file" accept="image/*,.pdf,.txt">
-</div>
-</div>
+<div id="chat"></div>
 </main>
+
+<div class="composer">
+<div class="input-area">
+<textarea id="promptBox" placeholder="اكتب رسالتك إلى NEXORA..." rows="1"></textarea>
+<button class="send" id="sendBtn" onclick="sendMessage()">إرسال ↑</button>
 </div>
+<div class="note">قد يخطئ الذكاء الاصطناعي أحياناً، راجع المعلومات المهمة.</div>
+</div>
+</div>
+
 <script>
-const promptBox=document.getElementById('prompt');
+const promptBox=document.getElementById('promptBox');
 const chat=document.getElementById('chat');
 const welcome=document.getElementById('welcome');
+const sendBtn=document.getElementById('sendBtn');
 
-function toggleMenu(){
-document.getElementById('sidebar').classList.toggle('open');
-}
+let messages=[];
 
 function addMessage(text,type){
 const div=document.createElement('div');
@@ -113,50 +75,55 @@ div.className='message '+type;
 div.textContent=text;
 chat.appendChild(div);
 document.getElementById('content').scrollTop=document.getElementById('content').scrollHeight;
+return div;
 }
 
- 
-function sendMessage(){
+async function sendMessage(){
 const text=promptBox.value.trim();
-if(!text)return;
+if(!text || sendBtn.disabled)return;
+
 welcome.style.display='none';
 addMessage(text,'user');
 promptBox.value='';
-setTimeout(()=>{
-addMessage('أهلاً بك في NEXORA AI! واجهة الموقع تعمل بنجاح. لتمكين الردود الذكية الحقيقية، يجب ربط الموقع بخدمة ذكاء اصطناعي عبر API.','bot');
-},500);
+promptBox.style.height='auto';
+
+messages.push({role:'user',content:text});
+sendBtn.disabled=true;
+
+const loading=addMessage('NEXORA يفكر...','bot');
+
+try{
+const response=await fetch('/api/chat',{
+method:'POST',
+headers:{'Content-Type':'application/json'},
+body:JSON.stringify({messages:messages})
+});
+
+const data=await response.json();
+
+if(!response.ok){
+throw new Error(data.error?.message||data.error||'تعذر الاتصال بالخدمة');
 }
- 
-const text=promptBox.value.trim();
-if(!text)return;
-welcome.style.display='none';
-addMessage(text,'user');
-promptBox.value='';
-setTimeout(()=>{
-addMessage('أهلاً بك في NEXORA AI! واجهة الموقع تعمل بنجاح. لتمكين الردود الذكية الحقيقية، يجب ربط الموقع بخدمة ذكاء اصطناعي عبر API.','bot');
-},500);
+
+const answer=data.choices?.[0]?.message?.content;
+
+if(!answer)throw new Error('لم يصل رد من النموذج');
+
+loading.textContent=answer;
+messages.push({role:'assistant',content:answer});
+
+}catch(error){
+loading.textContent='حدث خطأ: '+error.message;
+messages.pop();
+}finally{
+sendBtn.disabled=false;
+promptBox.focus();
+}
 }
 
 function useSuggestion(text){
 promptBox.value=text;
 sendMessage();
-}
-
-function newChat(){
-chat.innerHTML='';
-welcome.style.display='block';
-promptBox.value='';
-document.getElementById('sidebar').classList.remove('open');
-}
-
-function imageMode(){
-addMessage('وضع إنشاء الصور: يحتاج إلى ربط خدمة توليد الصور حتى تتمكن من إنشاء الصور فعلياً.','bot');
-welcome.style.display='none';
-}
-
-function showLibrary(){
-addMessage('المكتبة: ستتمكن من حفظ ملفاتك وأعمالك هنا بعد إضافة نظام التخزين.','bot');
-welcome.style.display='none';
 }
 
 promptBox.addEventListener('keydown',function(e){
@@ -166,10 +133,9 @@ sendMessage();
 }
 });
 
-document.getElementById('file').addEventListener('change',function(){
-if(this.files.length){
-addMessage('تم اختيار الملف: '+this.files[0].name,'user');
-}
+promptBox.addEventListener('input',function(){
+this.style.height='auto';
+this.style.height=Math.min(this.scrollHeight,120)+'px';
 });
 </script>
 </body>
