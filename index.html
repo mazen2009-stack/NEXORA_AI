@@ -115,7 +115,18 @@ chat.appendChild(div);
 document.getElementById('content').scrollTop=document.getElementById('content').scrollHeight;
 }
 
+ 
 function sendMessage(){
+const text=promptBox.value.trim();
+if(!text)return;
+welcome.style.display='none';
+addMessage(text,'user');
+promptBox.value='';
+setTimeout(()=>{
+addMessage('أهلاً بك في NEXORA AI! واجهة الموقع تعمل بنجاح. لتمكين الردود الذكية الحقيقية، يجب ربط الموقع بخدمة ذكاء اصطناعي عبر API.','bot');
+},500);
+}
+ 
 const text=promptBox.value.trim();
 if(!text)return;
 welcome.style.display='none';
