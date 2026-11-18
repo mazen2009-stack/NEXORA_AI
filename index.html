@@ -3,517 +3,163 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#090b14">
 <title>NEXORA AI</title>
-
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap');
-
-:root {
---bg:#090b14;
---panel:#111522;
---panel2:#191f30;
---text:#f4f5ff;
---muted:#929bb1;
---blue:#5865f2;
---purple:#a855f7;
---border:rgba(255,255,255,.08);
-}
-
-*{box-sizing:border-box;margin:0;padding:0}
-
-body{
-font-family:'Cairo',sans-serif;
-background:var(--bg);
-color:var(--text);
-height:100dvh;
-overflow:hidden;
-}
-
-.app{display:flex;height:100dvh}
-
-.sidebar{
-width:260px;
-background:#0d101b;
-border-left:1px solid var(--border);
-padding:22px 16px;
-display:flex;
-flex-direction:column;
-transition:.3s;
-}
-
-.logo{
-font-size:25px;
-font-weight:800;
-letter-spacing:1px;
-background:linear-gradient(90deg,#6675ff,#bd68ff);
--webkit-background-clip:text;
-color:transparent;
-margin-bottom:30px;
-}
-
-.new-chat{
-background:linear-gradient(110deg,#5865f2,#a855f7);
-border:0;
-padding:13px;
-border-radius:12px;
-color:white;
-font-family:inherit;
-font-weight:700;
-cursor:pointer;
-margin-bottom:22px;
-}
-
-.nav-item{
-padding:12px;
-border-radius:10px;
-color:var(--muted);
-cursor:pointer;
-margin-bottom:7px;
-transition:.2s;
-}
-
-.nav-item:hover,.nav-item.active{
-background:var(--panel2);
-color:white;
-}
-
-.sidebar-bottom{
-margin-top:auto;
-color:var(--muted);
-font-size:12px;
-text-align:center;
-}
-
-.main{
-flex:1;
-display:flex;
-flex-direction:column;
-min-width:0;
-}
-
-.header{
-height:70px;
-padding:0 25px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-border-bottom:1px solid var(--border);
-}
-
-.header-title{font-size:17px;font-weight:700}
-
-.status{font-size:12px;color:#4ade80}
-
-.status:before{
-content:"";
-display:inline-block;
-width:7px;height:7px;
-background:#4ade80;
-border-radius:50%;
-margin-left:7px;
-}
-
-.chat-area{
-flex:1;
-overflow-y:auto;
-padding:30px 15px;
-}
-
-.welcome{
-text-align:center;
-margin:11vh auto 30px;
-max-width:600px;
-}
-
-.welcome h1{
-font-size:clamp(30px,5vw,48px);
-font-weight:800;
-background:linear-gradient(90deg,#7180ff,#bd68ff);
--webkit-background-clip:text;
-color:transparent;
-}
-
-.welcome p{color:var(--muted);margin-top:10px}
-
-.suggestions{
-display:flex;
-flex-wrap:wrap;
-justify-content:center;
-gap:10px;
-margin-top:25px;
-}
-
-.suggestion{
-padding:11px 15px;
-background:var(--panel);
-border:1px solid var(--border);
-border-radius:12px;
-color:#dce0f0;
-cursor:pointer;
-font-family:inherit;
-font-size:13px;
-}
-
-.suggestion:hover{border-color:var(--blue)}
-
-.messages{max-width:850px;margin:auto}
-
-.message{
-display:flex;
-margin-bottom:22px;
-gap:12px;
-align-items:flex-start;
-}
-
-.avatar{
-min-width:35px;
-height:35px;
-border-radius:11px;
-display:grid;
-place-items:center;
-background:linear-gradient(135deg,#5865f2,#a855f7);
-font-size:14px;
-font-weight:800;
-}
-
-.message.user .avatar{background:#272e43}
-
-.message-content{
-background:var(--panel);
-padding:13px 17px;
-border-radius:13px;
-max-width:85%;
-line-height:1.9;
-font-size:14px;
-overflow-wrap:anywhere;
-white-space:pre-wrap;
-}
-
-.message.user .message-content{background:#191f31}
-
-.message-content img{
-max-width:100%;
-border-radius:10px;
-margin-top:10px;
-}
-
-.input-section{
-padding:15px 20px 20px;
-max-width:950px;
-width:100%;
-margin:auto;
-}
-
-.input-box{
-background:var(--panel);
-border:1px solid rgba(120,120,255,.22);
-border-radius:18px;
-padding:12px;
-display:flex;
-flex-direction:column;
-}
-
-textarea{
-background:transparent;
-border:0;
-outline:0;
-color:white;
-font-family:inherit;
-resize:none;
-padding:10px;
-min-height:48px;
-max-height:140px;
-font-size:14px;
-width:100%;
-}
-
-textarea::placeholder{color:#777f96}
-
-.input-actions{display:flex;align-items:center;gap:9px}
-
-.action-btn{
-border:1px solid var(--border);
-background:var(--panel2);
-color:#dce0f0;
-border-radius:10px;
-padding:9px 13px;
-cursor:pointer;
-font-family:inherit;
-font-size:12px;
-}
-
-.upload-btn{
-background:linear-gradient(110deg,#5865f2,#a855f7);
-border:0;
-color:white;
-font-weight:700;
-}
-
-.send-btn{
-margin-right:auto;
-background:linear-gradient(110deg,#5865f2,#a855f7);
-color:white;
-border:0;
-width:42px;
-height:42px;
-border-radius:12px;
-cursor:pointer;
-font-size:18px;
-}
-
-.disclaimer{
-text-align:center;
-font-size:10px;
-color:#707990;
-margin-top:10px;
-}
-
-#fileInput{display:none}
-
-.preview{
-display:none;
-padding:8px;
-color:#a5b4fc;
-font-size:12px;
-}
-
-.menu-btn{
-display:none;
-background:transparent;
-border:0;
-color:white;
-font-size:22px;
-cursor:pointer;
-}
-
-@media(max-width:750px){
-.sidebar{
-position:fixed;
-right:-270px;
-top:0;bottom:0;
-z-index:10;
-box-shadow:0 0 30px #000;
-}
+*{box-sizing:border-box}
+body{margin:0;background:#090b14;color:#f4f4fc;font-family:Arial,sans-serif}
+.app{display:flex;height:100vh}
+.sidebar{width:245px;background:#111426;padding:22px;display:flex;flex-direction:column;gap:20px;border-left:1px solid #292d42}
+.logo{font-size:25px;font-weight:bold;color:#a994ff}
+.logo span{color:white}
+button{cursor:pointer;font-family:inherit}
+.new{background:#765cf0;color:white;border:0;padding:13px;border-radius:12px;font-size:15px}
+.menu{display:grid;gap:8px}
+.menu button{background:transparent;color:#c5c7da;border:0;text-align:right;padding:13px;border-radius:10px;font-size:14px}
+.menu button:hover{background:#252943}
+.bottom{margin-top:auto;color:#888da5;font-size:12px;text-align:center}
+.main{flex:1;display:flex;flex-direction:column;min-width:0}
+header{height:65px;border-bottom:1px solid #24283d;display:flex;align-items:center;justify-content:space-between;padding:0 22px}
+header strong{font-size:18px}
+.status{font-size:12px;color:#9e8bff}
+.content{flex:1;overflow-y:auto;padding:25px}
+.welcome{max-width:650px;margin:10vh auto;text-align:center}
+.logo-icon{height:65px;width:65px;margin:auto auto 20px;border-radius:20px;background:linear-gradient(135deg,#7557ef,#c16be9);display:grid;place-items:center;font-size:30px}
+h1{font-size:32px}
+h1 span{color:#a994ff}
+.subtitle{color:#9ca2b9;line-height:1.9;margin-bottom:30px}
+.suggestions{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.suggestion{background:#151a2c;border:1px solid #2a304b;color:white;text-align:right;padding:17px;border-radius:14px}
+.suggestion:hover{border-color:#8e76ff}
+.suggestion small{display:block;color:#9298b0;margin-top:8px}
+.chat{max-width:850px;margin:auto;display:flex;flex-direction:column;gap:15px}
+.message{padding:15px 18px;border-radius:15px;max-width:85%;line-height:1.8;white-space:pre-wrap}
+.user{background:#302750;align-self:flex-start}
+.bot{background:#171c30;align-self:flex-end}
+.composer-area{padding:15px 20px 22px}
+.composer{max-width:850px;margin:auto;background:#151a2c;border:1px solid #343b59;border-radius:17px;padding:10px;display:flex;align-items:center;gap:9px}
+textarea{flex:1;background:transparent;color:white;border:0;outline:0;resize:none;font-size:15px;font-family:inherit;padding:12px;min-height:42px}
+.send{background:#8065f5;color:white;border:0;border-radius:11px;padding:13px 17px}
+.tool{background:#282e47;color:white;border:0;border-radius:10px;padding:12px}
+.mobile{display:none;background:none;color:white;border:0;font-size:22px}
+#file{display:none}
+@media(max-width:700px){
+.sidebar{position:fixed;right:-260px;top:0;bottom:0;z-index:5;transition:.2s}
 .sidebar.open{right:0}
-.menu-btn{display:block}
-.header{padding:0 15px}
-.input-section{padding:10px}
-.welcome{margin-top:10vh}
-.message-content{max-width:90%}
+.mobile{display:block}
+.content{padding:15px 12px}
+h1{font-size:26px}
+.suggestions{grid-template-columns:1fr}
+.composer-area{padding:10px}
+.message{max-width:95%}
 }
 </style>
 </head>
-
 <body>
 <div class="app">
-
 <aside class="sidebar" id="sidebar">
-<div class="logo">NEXORA AI</div>
-
-<button class="new-chat" onclick="newChat()">+ محادثة جديدة</button>
-
-<div class="nav-item active" onclick="newChat()">◈ المحادثة</div>
-<div class="nav-item" onclick="generateImageMode()">◈ إنشاء الصور</div>
-<div class="nav-item" onclick="startVoice()">◈ المحادثة الصوتية</div>
-<div class="nav-item" onclick="showLibrary()">◈ مكتبتي</div>
-
-<div class="sidebar-bottom">
-NEXORA AI © 2026
-<br>
-Your AI. Your World.
+<div class="logo">NEXORA <span>AI</span></div>
+<button class="new" onclick="newChat()">＋ محادثة جديدة</button>
+<div class="menu">
+<button onclick="newChat()">⌂ الرئيسية</button>
+<button onclick="imageMode()">▧ إنشاء صورة</button>
+<button onclick="document.getElementById('file').click()">▤ رفع ملف</button>
+<button onclick="showLibrary()">▣ المكتبة</button>
 </div>
+<div class="bottom">NEXORA AI<br>ذكاء اصطناعي للجميع</div>
 </aside>
-
 <main class="main">
-
-<header class="header">
-<div style="display:flex;align-items:center;gap:13px">
-<button class="menu-btn" onclick="toggleMenu()">☰</button>
-<div class="header-title">NEXORA AI</div>
-</div>
-<div class="status">جاهز للمحادثة</div>
+<header>
+<button class="mobile" onclick="toggleMenu()">☰</button>
+<strong>NEXORA AI</strong>
+<span class="status">● متصل</span>
 </header>
-
-<section class="chat-area" id="chatArea">
-
+<section class="content" id="content">
 <div class="welcome" id="welcome">
-<h1>مرحباً بك في NEXORA</h1>
-<p>مساعدك الذكي للإبداع والتعلم والإجابة عن أسئلتك.</p>
-
+<div class="logo-icon">✦</div>
+<h1>أهلاً بك في <span>NEXORA</span></h1>
+<p class="subtitle">مساعدك الذكي للتعلم والإبداع والإنتاجية.<br>كيف يمكنني مساعدتك اليوم؟</p>
 <div class="suggestions">
-<button class="suggestion" onclick="suggest('اشرح لي موضوعاً صعباً بطريقة بسيطة')">✦ اشرح لي شيئاً</button>
-<button class="suggestion" onclick="suggest('ساعدني في كتابة فكرة إبداعية')">✦ اكتب لي فكرة</button>
-<button class="suggestion" onclick="generateImageMode()">✦ إنشاء صورة</button>
-<button class="suggestion" onclick="suggest('ساعدني في البرمجة')">✦ البرمجة</button>
+<button class="suggestion" onclick="useSuggestion('اشرح لي درساً بطريقة سهلة')">📚 الدراسة<small>شرح وتبسيط الدروس</small></button>
+<button class="suggestion" onclick="useSuggestion('اقترح لي أفكاراً لمشروع جديد')">💡 الأفكار<small>اكتشف أفكاراً جديدة</small></button>
+<button class="suggestion" onclick="useSuggestion('ساعدني في كتابة كود لموقعي')">💻 البرمجة<small>مساعدة في الأكواد</small></button>
+<button class="suggestion" onclick="imageMode()">🎨 الصور<small>إنشاء الصور</small></button>
 </div>
 </div>
-
-<div class="messages" id="messages"></div>
+<div class="chat" id="chat"></div>
 </section>
-
-<section class="input-section">
-<div class="input-box">
-
-<div class="preview" id="preview"></div>
-
-<textarea id="userInput"
-placeholder="اسأل NEXORA AI أي شيء..."
-rows="1"
-onkeydown="handleKey(event)"></textarea>
-
-<div class="input-actions">
-
-<button class="action-btn upload-btn" onclick="document.getElementById('fileInput').click()">＋ إضافة صورة</button>
-
-<input type="file" id="fileInput" accept="image/*" onchange="handleFile(event)">
-
-<button class="action-btn" onclick="startVoice()">🎙 صوت</button>
-
-<button class="send-btn" onclick="sendMessage()">↑</button>
-
+<div class="composer-area">
+<div class="composer">
+<button class="tool" onclick="document.getElementById('file').click()">＋</button>
+<button class="tool" onclick="imageMode()">▧</button>
+<textarea id="prompt" placeholder="اكتب رسالتك إلى NEXORA AI..." rows="1"></textarea>
+<button class="send" onclick="sendMessage()">إرسال ↑</button>
+<input type="file" id="file" accept="image/*,.pdf,.txt">
 </div>
 </div>
-
-<div class="disclaimer">
-قد يقدم الذكاء الاصطناعي معلومات غير دقيقة. تحقق من المعلومات المهمة.
-</div>
-</section>
-
 </main>
 </div>
-
 <script>
-const input=document.getElementById("userInput");
-const messages=document.getElementById("messages");
-const welcome=document.getElementById("welcome");
-const chatArea=document.getElementById("chatArea");
-
-let conversation=[];
-let selectedFile=null;
-let imageMode=false;
+const promptBox=document.getElementById('prompt');
+const chat=document.getElementById('chat');
+const welcome=document.getElementById('welcome');
 
 function toggleMenu(){
-document.getElementById("sidebar").classList.toggle("open");
-}
-
-function newChat(){
-messages.innerHTML="";
-conversation=[];
-welcome.style.display="block";
-imageMode=false;
-selectedFile=null;
-document.getElementById("preview").style.display="none";
-input.placeholder="اسأل NEXORA AI أي شيء...";
-document.getElementById("sidebar").classList.remove("open");
-}
-
-function suggest(text){
-input.value=text;
-sendMessage();
+document.getElementById('sidebar').classList.toggle('open');
 }
 
 function addMessage(text,type){
-welcome.style.display="none";
-
-const message=document.createElement("div");
-message.className="message "+type;
-
-const avatar=document.createElement("div");
-avatar.className="avatar";
-avatar.textContent=type==="user"?"أنت":"N";
-
-const content=document.createElement("div");
-content.className="message-content";
-content.textContent=text;
-
-message.appendChild(avatar);
-message.appendChild(content);
-messages.appendChild(message);
-
-chatArea.scrollTop=chatArea.scrollHeight;
+const div=document.createElement('div');
+div.className='message '+type;
+div.textContent=text;
+chat.appendChild(div);
+document.getElementById('content').scrollTop=document.getElementById('content').scrollHeight;
 }
 
-function handleKey(event){
-if(event.key==="Enter"&&!event.shiftKey){
-event.preventDefault();
+function sendMessage(){
+const text=promptBox.value.trim();
+if(!text)return;
+welcome.style.display='none';
+addMessage(text,'user');
+promptBox.value='';
+setTimeout(()=>{
+addMessage('أهلاً بك في NEXORA AI! واجهة الموقع تعمل بنجاح. لتمكين الردود الذكية الحقيقية، يجب ربط الموقع بخدمة ذكاء اصطناعي عبر API.','bot');
+},500);
+}
+
+function useSuggestion(text){
+promptBox.value=text;
 sendMessage();
 }
+
+function newChat(){
+chat.innerHTML='';
+welcome.style.display='block';
+promptBox.value='';
+document.getElementById('sidebar').classList.remove('open');
 }
 
-function handleFile(event){
-const file=event.target.files[0];
-if(!file)return;
-
-selectedFile=file;
-const preview=document.getElementById("preview");
-preview.style.display="block";
-preview.textContent="تم اختيار الصورة: "+file.name;
-}
-
-async function sendMessage(){
-const text=input.value.trim();
-if(!text&&!selectedFile)return;
-
-let message=text;
-
-if(selectedFile){
-message+=(message?"\n":"")+"[الصورة المرفقة: "+selectedFile.name+"]";
-}
-
-addMessage(message,"user");
-
-conversation.push({role:"user",content:text});
-
-input.value="";
-selectedFile=null;
-document.getElementById("fileInput").value="";
-document.getElementById("preview").style.display="none";
-
-const loading=document.createElement("div");
-loading.className="typing";
-loading.textContent="NEXORA AI يفكر...";
-messages.appendChild(loading);
-
-chatArea.scrollTop=chatArea.scrollHeight;
-
-// ربط واجهة المحادثة بخدمة AI يحتاج API.
-loading.remove();
-
-addMessage(
-"واجهة NEXORA AI جاهزة! لسه محتاجين نربطها بمحرك ذكاء اصطناعي عشان تقدر ترد على أسئلتك فعلياً.",
-"assistant"
-);
-}
-
-function generateImageMode(){
-imageMode=true;
-input.placeholder="اكتب وصف الصورة التي تريد إنشاءها...";
-document.getElementById("sidebar").classList.remove("open");
-input.focus();
-}
-
-function startVoice(){
-if(!("webkitSpeechRecognition" in window)&&!("SpeechRecognition" in window)){
-addMessage("المتصفح لا يدعم التعرف على الصوت.","assistant");
-return;
-}
-
-const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
-const recognition=new SpeechRecognition();
-
-recognition.lang="ar-EG";
-recognition.onresult=function(event){
-input.value=event.results[0][0].transcript;
-};
-recognition.start();
+function imageMode(){
+addMessage('وضع إنشاء الصور: يحتاج إلى ربط خدمة توليد الصور حتى تتمكن من إنشاء الصور فعلياً.','bot');
+welcome.style.display='none';
 }
 
 function showLibrary(){
-addMessage("مكتبتك فارغة حالياً.","assistant");
-document.getElementById("sidebar").classList.remove("open");
+addMessage('المكتبة: ستتمكن من حفظ ملفاتك وأعمالك هنا بعد إضافة نظام التخزين.','bot');
+welcome.style.display='none';
 }
-</script>
 
+promptBox.addEventListener('keydown',function(e){
+if(e.key==='Enter'&&!e.shiftKey){
+e.preventDefault();
+sendMessage();
+}
+});
+
+document.getElementById('file').addEventListener('change',function(){
+if(this.files.length){
+addMessage('تم اختيار الملف: '+this.files[0].name,'user');
+}
+});
+</script>
 </body>
-  </html>
+</html>
