@@ -1,47 +1,265 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NEXORA AI</title>
+
 <style>
+:root{
+--bg:#080d14;
+--panel:#101925;
+--card:#142131;
+--text:#edf7ff;
+--muted:#8496a9;
+--line:#233548;
+--accent:#00c8ff;
+--bubble:#142b40;
+--user:#075477;
+}
+body.light{
+--bg:#f2f7fa;
+--panel:#ffffff;
+--card:#eaf3f8;
+--text:#142330;
+--muted:#657b8b;
+--line:#d5e3eb;
+--accent:#009ed0;
+--bubble:#e1f3fc;
+--user:#c9efff;
+}
 *{box-sizing:border-box}
-body{margin:0;background:#090b14;color:#f4f4fc;font-family:Arial,sans-serif;height:100vh;overflow:hidden}
-.app{height:100vh;display:flex;flex-direction:column;max-width:1000px;margin:auto}
-header{height:65px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;border-bottom:1px solid #25283a;background:#101321}
-.logo{font-size:22px;font-weight:bold;letter-spacing:1px;color:#9b8cff}
-.status{font-size:12px;color:#65d6a0}
-main{flex:1;overflow-y:auto;padding:25px 16px}
-.welcome{text-align:center;margin:12vh auto 30px;max-width:600px}
-.welcome h1{font-size:35px;margin-bottom:12px;background:linear-gradient(90deg,#9c8cff,#55d9d0);color:transparent;background-clip:text}
-.welcome p{color:#999db2;line-height:1.8}
-.suggestions{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;max-width:550px;margin:25px auto}
-.suggestions button{background:#14192a;border:1px solid #292e45;color:#d9d9e8;padding:14px;border-radius:12px;cursor:pointer;text-align:right}
-.suggestions button:hover{border-color:#8b7cff}
-.message{max-width:85%;padding:13px 16px;border-radius:15px;margin:12px 0;line-height:1.8;white-space:pre-wrap;overflow-wrap:anywhere}
-.user{background:#6555c9;margin-right:auto;border-bottom-left-radius:4px}
-.bot{background:#171c2c;border:1px solid #292e40;margin-left:auto;border-bottom-right-radius:4px}
-.composer{padding:15px;background:#101321;border-top:1px solid #25283a}
-.input-area{display:flex;align-items:flex-end;gap:10px;background:#191e30;border:1px solid #303650;border-radius:15px;padding:10px}
-textarea{flex:1;resize:none;background:transparent;border:0;outline:none;color:white;font-size:16px;min-height:28px;max-height:120px;font-family:Arial;line-height:1.6}
-.send{background:#7765ed;color:white;border:0;border-radius:11px;padding:12px 18px;font-size:15px;cursor:pointer}
-.send:disabled{opacity:.5}
-.note{text-align:center;color:#777d91;font-size:11px;margin-top:9px}
-@media(max-width:500px){.welcome h1{font-size:29px}.suggestions{grid-template-columns:1fr}.message{max-width:94%}}
+body{
+margin:0;
+background:var(--bg);
+color:var(--text);
+font-family:Arial,sans-serif;
+height:100dvh;
+transition:background .3s,color .3s;
+}
+.app{
+height:100dvh;
+display:flex;
+flex-direction:column;
+max-width:1100px;
+margin:auto;
+}
+header{
+height:65px;
+flex-shrink:0;
+background:var(--panel);
+border-bottom:1px solid var(--line);
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 18px;
+}
+.logo{
+font-size:23px;
+font-weight:900;
+letter-spacing:1px;
+color:var(--accent);
+}
+.header-actions{
+display:flex;
+align-items:center;
+gap:12px;
+}
+.status{font-size:12px;color:#35c99a}
+.theme{
+background:var(--card);
+border:1px solid var(--line);
+color:var(--text);
+padding:10px 13px;
+border-radius:12px;
+cursor:pointer;
+}
+main{
+flex:1;
+overflow-y:auto;
+padding:20px 15px;
+scroll-behavior:smooth;
+}
+.welcome{
+text-align:center;
+margin:11vh auto 30px;
+}
+.welcome h1{
+font-size:36px;
+color:var(--accent);
+margin-bottom:12px;
+}
+.welcome p{
+color:var(--muted);
+line-height:1.8;
+}
+.suggestions{
+display:grid;
+grid-template-columns:repeat(2,minmax(0,1fr));
+gap:10px;
+max-width:550px;
+margin:25px auto;
+}
+button{
+font-family:inherit;
+transition:transform .18s,background .25s,border-color .25s,box-shadow .25s;
+}
+button:active{transform:scale(.95)}
+.suggestions button{
+background:var(--card);
+border:1px solid var(--line);
+color:var(--text);
+padding:15px;
+border-radius:13px;
+cursor:pointer;
+}
+.suggestions button:hover{
+border-color:var(--accent);
+box-shadow:0 0 15px #00c8ff22;
+}
+.message-row{
+display:flex;
+width:100%;
+margin:13px 0;
+animation:appear .28s ease both;
+}
+.message-row.user{justify-content:flex-start}
+.message-row.bot{justify-content:flex-end}
+.message{
+max-width:85%;
+padding:13px 16px;
+border-radius:17px;
+line-height:1.8;
+white-space:pre-wrap;
+overflow-wrap:anywhere;
+}
+.user .message{
+background:var(--user);
+color:var(--text);
+border-bottom-left-radius:5px;
+}
+.bot .message{
+background:var(--bubble);
+border:1px solid var(--line);
+border-bottom-right-radius:5px;
+}
+.message-meta{
+display:flex;
+align-items:center;
+justify-content:flex-end;
+gap:6px;
+font-size:10px;
+color:var(--muted);
+margin-top:5px;
+}
+.checks{color:var(--accent);font-weight:bold;font-size:14px}
+.typing{
+display:flex;
+align-items:center;
+gap:5px;
+height:24px;
+}
+.typing span{
+width:7px;
+height:7px;
+border-radius:50%;
+background:var(--accent);
+animation:bounce .8s infinite alternate;
+}
+.typing span:nth-child(2){animation-delay:.2s}
+.typing span:nth-child(3){animation-delay:.4s}
+.composer{
+padding:14px;
+background:var(--panel);
+border-top:1px solid var(--line);
+}
+.input-area{
+display:flex;
+align-items:flex-end;
+gap:10px;
+background:var(--card);
+border:1px solid var(--line);
+border-radius:17px;
+padding:10px;
+transition:border-color .2s,box-shadow .2s;
+}
+.input-area:focus-within{
+border-color:var(--accent);
+box-shadow:0 0 14px #00c8ff20;
+}
+textarea{
+flex:1;
+resize:none;
+background:transparent;
+border:0;
+outline:none;
+color:var(--text);
+font-size:16px;
+min-height:28px;
+max-height:120px;
+font-family:Arial;
+line-height:1.6;
+}
+.send{
+background:var(--accent);
+color:#00131c;
+border:0;
+border-radius:12px;
+padding:12px 18px;
+font-size:15px;
+font-weight:bold;
+cursor:pointer;
+}
+.send:hover{
+box-shadow:0 0 18px #00c8ff66;
+}
+.send:disabled{opacity:.5;cursor:not-allowed}
+.note{
+text-align:center;
+color:var(--muted);
+font-size:11px;
+margin-top:9px;
+}
+.new-chat{
+background:transparent;
+color:var(--accent);
+border:1px solid var(--line);
+border-radius:10px;
+padding:9px 12px;
+cursor:pointer;
+}
+@keyframes appear{
+from{opacity:0;transform:translateY(12px) scale(.98)}
+to{opacity:1;transform:translateY(0) scale(1)}
+}
+@keyframes bounce{
+from{transform:translateY(3px);opacity:.5}
+to{transform:translateY(-4px);opacity:1}
+}
+@media(max-width:500px){
+.welcome h1{font-size:29px}
+.suggestions{grid-template-columns:1fr}
+.message{max-width:94%}
+}
 </style>
 </head>
+
 <body>
 <div class="app">
+
 <header>
 <div class="logo">NEXORA AI</div>
-<div class="status">● متصل</div>
+<div class="header-actions">
+<span class="status">● متصل</span>
+<button class="new-chat" onclick="newChat()">محادثة جديدة +</button>
+<button class="theme" id="themeBtn" onclick="toggleTheme()">☀️</button>
+</div>
 </header>
 
 <main id="content">
 <div class="welcome" id="welcome">
 <h1>أهلاً بك في NEXORA</h1>
-<p>مساعدك الذكي للإجابة عن أسئلتك ومساعدتك في أفكارك ومهامك.</p>
+<p>مساعدك الذكي، جاهز لمساعدتك في أي وقت.</p>
 <div class="suggestions">
 <button onclick="useSuggestion('اشرح لي الذكاء الاصطناعي بطريقة بسيطة')">اشرح لي موضوعاً</button>
 <button onclick="useSuggestion('ساعدني في كتابة فكرة إبداعية')">اكتب لي فكرة</button>
@@ -55,10 +273,11 @@ textarea{flex:1;resize:none;background:transparent;border:0;outline:none;color:w
 <div class="composer">
 <div class="input-area">
 <textarea id="promptBox" placeholder="اكتب رسالتك إلى NEXORA..." rows="1"></textarea>
-<button class="send" id="sendBtn" onclick="sendMessage()">إرسال ↑</button>
+<button class="send" id="sendBtn" onclick="sendMessage()">➤</button>
 </div>
 <div class="note">قد يخطئ الذكاء الاصطناعي أحياناً، راجع المعلومات المهمة.</div>
 </div>
+
 </div>
 
 <script>
@@ -66,31 +285,65 @@ const promptBox=document.getElementById('promptBox');
 const chat=document.getElementById('chat');
 const welcome=document.getElementById('welcome');
 const sendBtn=document.getElementById('sendBtn');
+const content=document.getElementById('content');
 
 let messages=[];
+let busy=false;
+
+function scrollBottom(){
+content.scrollTop=content.scrollHeight;
+}
 
 function addMessage(text,type){
-const div=document.createElement('div');
-div.className='message '+type;
-div.textContent=text;
-chat.appendChild(div);
-document.getElementById('content').scrollTop=document.getElementById('content').scrollHeight;
-return div;
+const row=document.createElement('div');
+row.className='message-row '+type;
+
+const wrap=document.createElement('div');
+wrap.style.maxWidth='100%';
+
+const bubble=document.createElement('div');
+bubble.className='message';
+bubble.textContent=text;
+
+wrap.appendChild(bubble);
+
+if(type==='user'){
+const meta=document.createElement('div');
+meta.className='message-meta';
+meta.innerHTML='<span>تم الإرسال</span><span class="checks">✓✓</span>';
+wrap.appendChild(meta);
+}
+
+row.appendChild(wrap);
+chat.appendChild(row);
+scrollBottom();
+
+return bubble;
+}
+
+function addTyping(){
+const bubble=addMessage('','bot');
+bubble.innerHTML='<div class="typing"><span></span><span></span><span></span></div>';
+return bubble;
 }
 
 async function sendMessage(){
 const text=promptBox.value.trim();
-if(!text || sendBtn.disabled)return;
 
+if(!text||busy)return;
+
+busy=true;
+sendBtn.disabled=true;
 welcome.style.display='none';
+
 addMessage(text,'user');
+messages.push({role:'user',content:text});
+
 promptBox.value='';
 promptBox.style.height='auto';
 
-messages.push({role:'user',content:text});
-sendBtn.disabled=true;
-
-const loading=addMessage('NEXORA يفكر...','bot');
+const loading=addTyping();
+let answer='';
 
 try{
 const response=await fetch('/api/chat',{
@@ -99,23 +352,62 @@ headers:{'Content-Type':'application/json'},
 body:JSON.stringify({messages:messages})
 });
 
-const data=await response.json();
-
 if(!response.ok){
-throw new Error(data.error?.message||data.error||'تعذر الاتصال بالخدمة');
+let err={};
+try{err=await response.json()}catch(e){}
+throw new Error(err.error?.message||err.error||'تعذر الاتصال بالخدمة');
 }
 
-const answer=data.choices?.[0]?.message?.content;
+if(!response.body)throw new Error('المتصفح لا يدعم استقبال الرد');
+
+const reader=response.body.getReader();
+const decoder=new TextDecoder();
+let buffer='';
+
+while(true){
+const {done,value}=await reader.read();
+
+if(done)break;
+
+buffer+=decoder.decode(value,{stream:true});
+
+const lines=buffer.split('\n');
+buffer=lines.pop()||'';
+
+for(const line of lines){
+const trimmed=line.trim();
+
+if(!trimmed.startsWith('data:'))continue;
+
+const data=trimmed.slice(5).trim();
+
+if(!data||data==='[DONE]')continue;
+
+try{
+const parsed=JSON.parse(data);
+const piece=parsed.choices?.[0]?.delta?.content;
+
+if(piece){
+answer+=piece;
+loading.textContent=answer;
+scrollBottom();
+}
+}catch(e){}
+}
+}
 
 if(!answer)throw new Error('لم يصل رد من النموذج');
 
-loading.textContent=answer;
 messages.push({role:'assistant',content:answer});
 
 }catch(error){
 loading.textContent='حدث خطأ: '+error.message;
+if(messages.length&&messages[messages.length-1].role==='user'){
 messages.pop();
+}
+
 }finally{
+busy=false;
 sendBtn.disabled=false;
 promptBox.focus();
 }
@@ -124,6 +416,29 @@ promptBox.focus();
 function useSuggestion(text){
 promptBox.value=text;
 sendMessage();
+}
+
+function newChat(){
+if(busy)return;
+messages=[];
+chat.innerHTML='';
+welcome.style.display='block';
+promptBox.value='';
+scrollBottom();
+}
+
+function toggleTheme(){
+document.body.classList.toggle('light');
+
+const light=document.body.classList.contains('light');
+localStorage.setItem('nexora-theme',light?'light':'dark');
+
+document.getElementById('themeBtn').textContent=light?'🌙':'☀️';
+}
+
+if(localStorage.getItem('nexora-theme')==='light'){
+document.body.classList.add('light');
+document.getElementById('themeBtn').textContent='🌙';
 }
 
 promptBox.addEventListener('keydown',function(e){
